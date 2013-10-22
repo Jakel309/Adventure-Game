@@ -56,7 +56,27 @@ private:
 	string description;//Description of item
 	bool canPickUp;//Variable to determine if item can be picked up
 	Item **canInteractWith;//List of items this item can interact with
-}
+};
+
+class Weapon:public Item{
+public:
+	Weapon(string _name, bool pickup, string desc, int dur, bool ultimate);
+	~Weapon();
+	int getDurability();
+	void changeDurabiliy(int i);
+private:
+	int durability;
+	bool ultimate;
+};
+
+class ActionObject:public Item{
+public:
+	ActionObject(string _name, bool pickup, string desc, string effect);
+	~ActionObject();
+	string getEffect();
+private:
+	string effect;
+};
 
 class People{
 public:
@@ -71,7 +91,7 @@ private:
 	int xCoord;//X position
 	int yCoord;//Y position
 	string *commands;//List of commands available
-}
+};
 
 class Player: public People{
 public:
@@ -81,7 +101,7 @@ public:
 	void removeItem(Item *toRemove);//Removes item from inventory
 private:
 	Item **inventory;//List of items in inventory
-}
+};
 
 class NPC:public People{
 public:
@@ -91,4 +111,4 @@ public:
 	void changeKill(bool _kill);//Changes if NPC kills
 private:
 	bool kill;//Variable to see if enemy kills
-}
+};
