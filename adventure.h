@@ -1,20 +1,18 @@
 //The following is created by Justin Foley and Jack Sorrells
 #include <iostream>
 
-class Level{
+class Basic{
 public:
-	Level(int x, int y){}//Initializes with the size of the grid of the map
+	Level(string _name);//Initializes with the size of the grid of the map
 	~Level();//Deconstructor
-	//void addRooms(Room *room);//Add room to rooms array
-	//Room getRoom(int x, int y);//Get room according to x,y-coordinates
+	string getName();
 private:
-	//Room **roomsX;//Array of rooms according to x coordinate
-	//Room **roomsY;//Array of rooms according to y coordinate
+	string name;
 };
 
-class Room{
+class Room:public Basic{
 public:
-	Room(int _xCoord, int _yCoord, string *_commands, string desc);//Initialize room with the x,y-coordinates, a list of commands, and the description of the room
+	Room(string *_commands, string desc, Item *_items);//Initialize room with the x,y-coordinates, a list of commands, and the description of the room
 	~Room();//Deallocates memory
 	void addItem(Item *item);//Adds an item to items array
 	void removeItem(Item *item);//Removes an item from items array
@@ -45,17 +43,14 @@ private:
 	Room **eastRoom;
 };
 
-class Item{
+class Item:public Basic{
 public:
 	Item(string _name, bool pickup, string desc);//Initializes item with the name, whether it can be picked up, and it's description
 	~Item();//Deconstructor
-	string getName() const;//Gets name
 	string getDescription() const;//Gets description
 private:
-	string name;//Name of item
 	string description;//Description of item
 	bool canPickUp;//Variable to determine if item can be picked up
-	Item **canInteractWith;//List of items this item can interact with
 };
 
 class Weapon:public Item{
@@ -74,20 +69,22 @@ public:
 	ActionObject(string _name, bool pickup, string desc, string effect);
 	~ActionObject();
 	string getEffect();
+	void addInteractWith(string name);
+	bool doesInteract(string name);
+	void removeInteractWith(string name);
 private:
 	string effect;
+	String *canInteractWith;//List of items this item can interact with
 };
 
-class People{
+class People:public Basic{
 public:
 	People(string _name, Room *_room, string *_commands);//Initializes people with name and x,y-coordinates, and list of commands
 	~People();//Deconstructor
 	void setPosition(int x, int y);//Set position
-	string getName() const;//Gets name
 	void getCommands() const;//Prints commands available
 private:
 	Room **inRoom;
-	string name;//Name of people
 	int xCoord;//X position
 	int yCoord;//Y position
 	string *commands;//List of commands available
