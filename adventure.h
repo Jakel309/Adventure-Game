@@ -101,6 +101,7 @@ public:
 	Item getItem(Item *_item);
 	bool hasWeapon();
 private:
+	int numItems;
 	Item **inventory;//List of items in inventory
 };
 
