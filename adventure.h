@@ -13,12 +13,13 @@ private:
 
 class Item:public Basic{
 public:
-	Item(std::string _name, bool pickup, std::string desc);//Initializes item with the name, whether it can be picked up, and it's description
+	Item(std::string _name, bool pickup, std::string desc, std::string _itemType);//Initializes item with the name, whether it can be picked up, and it's description
 	virtual ~Item();//Deconstructor
 	std::string getDescription() const;//Gets description
 private:
 	std::string description;//Description of item
 	bool canPickUp;//Variable to determine if item can be picked up
+	std::string itemType;
 };
 
 class Room:public Basic{
@@ -57,7 +58,7 @@ private:
 
 class Weapon:public Item{
 public:
-	Weapon(std::string _name, bool pickup, std::string desc, int dur, bool ultimate);//Initializes weapon with name, whether it can be picked up, its description, its durability, and if it is the ultimate weapon
+	Weapon(std::string _name, bool pickup, std::string itemType="Weapon", desc, std::int dur, bool ultimate);//Initializes weapon with name, whether it can be picked up, its description, its durability, and if it is the ultimate weapon
 	~Weapon();//Destructor
 	int getDurability() const;//Gets durability
 	void changeDurabiliy(int i);//Changes durability
@@ -69,7 +70,7 @@ private:
 
 class ActionObject:public Item{
 public:
-	ActionObject(std::string _name, bool pickup, std::string desc, std::string _effect);//Initializes an action object with name, whether it can be picked up, its description, and its effect
+	ActionObject(std::string _name, bool pickup, std::string desc, std::string itemType="ActionObject", std::string _effect);//Initializes an action object with name, whether it can be picked up, its description, and its effect
 	~ActionObject();//Destructor
 	std::string getEffect() const;//Gets effect
 	void addInteractWith(std::string name);//Adds an object it can interact with
