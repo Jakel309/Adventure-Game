@@ -2,32 +2,63 @@
 #include <iostream>
 #include "adventure.h"
 
-Room::Room(std::string name, List<std::string> _commands, std::string desc, List<Item*> _items):Basic(name){
+Room::Room(std::string name, List<std::string> _commands, std::string desc, List<Weapon> _weapons, List<ActionObject> _actionObjects):Basic(name){
 	initialize(commands);
 	for(int i=0; i<getSize(_commands); i++)
 		append(commands,getNth(_commands,i));
 	description=desc;
-	initialize(items);
-	for(int i=0; i<getSize(_items); i++)
-		append(items,getNth(_items,i));
+	initialize(weapons);
+    initialize(actionObjects);
+	for(int i=0; i<getSize(_weapons); i++)
+		append(weapons,getNth(_weapons,i));
+    for(int i=0; i<getSize(_actionObjects); i++)
+		append(actionObjects,getNth(_actionObjects,i));
+
 	visited=false;
 }
 
 Room::~Room(){
 	destroy(commands);
-	for(int i=0; i<getSize(items); i++)
-		delete getNth(items,i);
-	destroy(items);
+	for(int i=0; i<getSize(weapons); i++)
+		~Weapon getNth(weapons,i);
+	destroy(weapons);
+    for(int i=0; i<getSize(actionObjects); i++)
+		~ActionObject getNth(actionObjects,i);
+	destroy(actionObjects);
 }
 
-void Room::addItem(Item *item){
-	append(items,item);
+//void Room::addItem(Item *item){
+//	append(items,item);
+//}
+//
+//void Room::removeItem(Item *item){
+//	for(int i=0; i<getSize(items); i++)
+//		if(getNth(items,i)==item){
+//			removeNth(items,i);
+//			break;
+//		}
+//}
+
+void Room::addWeapon(Weapon *_weapon){
+	append(weapons,_weapon);
 }
 
-void Room::removeItem(Item *item){
-	for(int i=0; i<getSize(items); i++)
-		if(getNth(items,i)==item){
-			removeNth(items,i);
+void Room::removeWeapon(Weapon *_weapon){
+	for(int i=0; i<getSize(weapons); i++)
+		if(getNth(weapons,i)==_weapon){
+			removeNth(weapons,i);
+			break;
+		}
+}
+
+void Room::addActionObject(ActionObject *_actionObject){
+	append(actionObjects,_actionObject);
+}
+
+void Room::removeActionObject(ActionObject *_actionObject){
+	for(int i=0; i<getSize(actionObjects); i++)
+		if(getNth(actionObjects,i)==_actionObject){
+			removeNth(actionObjects,i);
 			break;
 		}
 }
@@ -85,18 +116,18 @@ Room Room::southRoom() const{
 	return *pSouthRoom;
 }
 
-void Room::westRoom(Room *room){
+void Room::westRoom(Room room){
 	pWestRoom=room;
 }
 
-void Room::northRoom(Room *room){
+void Room::northRoom(Room room){
 	pNorthRoom=room;
 }
 
-void Room::southRoom(Room *room){
+void Room::southRoom(Room room){
 	pSouthRoom=room;
 }
 
-void Room::eastRoom(Room *room){
+void Room::eastRoom(Room room){
 	pEastRoom=room;
 }

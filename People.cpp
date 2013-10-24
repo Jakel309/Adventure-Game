@@ -7,44 +7,58 @@
 //
 
 #include "adventure.h"
-#include "list.h"
 
-People::People(string _name, Room * _room, string * _commands){ //Initializes people with name and x,y-coordinates, and list of commands
-    name = _name;
+People::People(std::string _name, Room  _room, std::string * _commands):Basic(_name){ //Initializes people with name and x,y-coordinates, and list of commands
     inRoom = _room;
     commands = _commands;
 }
 
 People::~People(){
-    room = NULL;
-    commands = NULL;
 }
 
 void People::setPosition(Room * roomToSet){
     inRoom = roomToSet;
 }
 
-string* People::getCommands() const{
+std::string* People::getCommands() const{
     return commands;
 }
 
-Player::Player(string _name, Room* _room, string* _commands, bool _kill){
+Room* People::getRoom() const{
+    return inRoom;
+}
+
+Player::Player(std::string _name, Room _room, std::string* _commands, bool _kill):People(_name, _room, _commands){
     numItems = 0;
-    initialize(inventory);
+    initialize(weapons);
+    initialize(actionObjects);
 }
 
 Player::~Player(){
-    destroy(inventory);
+    destroy(weapons);
+    destroy(actionObjects);
 }
 
-void Player::addItem(Item * newItem){
-    add(newItem);
+void Player::addWeapon(Weapon *_weapon){
+	append(weapons,_weapon);
 }
 
-void Player::removeItem(Item * toRemove){
-    for(int i=0; i<numItems; i++)
-		if(getNth(inventory,i)==toRemove){
-			removeNth(inventory,i);
+void Player::removeWeapon(Weapon *_weapon){
+	for(int i=0; i<getSize(weapons); i++)
+		if(getNth(weapons,i)==_weapon){
+			removeNth(weapons,i);
+			break;
+		}
+}
+
+void Player::addActionObject(ActionObject *_actionObject){
+	append(actionObjects,_actionObject);
+}
+
+void Player::removeActionObject(ActionObject *_actionObject){
+	for(int i=0; i<getSize(actionObjects); i++)
+		if(getNth(actionObjects,i)==_actionObject){
+			removeNth(actionObjects,i);
 			break;
 		}
 }
@@ -64,7 +78,7 @@ bool Player::hasWeapon() const{
     return false;
 }
 
-NPC::NPC(string _name, Room * _room, string * _commands, bool _kill, bool _mega){
+NPC::NPC(std::string _name, Room  _room, std::string * _commands, bool _kill, bool _mega):People(_name, _room, _commands){
     kill = _kill;
     mega = _mega;
 }

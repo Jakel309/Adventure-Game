@@ -8,24 +8,24 @@
 
 #include "adventure.h"
 
-Item::Item(string _name, bool pickup, string desc){ //Initializes the item with the name, whether or not it can be picked up, as well as it's decription.
-    name = _name;
+Item::Item(std::string _name, bool pickup, std::string desc, std::string _itemType):Basic(_name){ //Initializes the item with the name, whether or not it can be picked up, as well as it's decription.
     description = desc;
     canPickUp = pickup;
+    itemType = _itemType;
 }
 
 Item::~Item(){ //Deconstructor
 }
 
-string Item::getName() const{ //Returns the name.
+std::string Item::getName() const{ //Returns the name.
     return name;
 }
 
-string Item::getDescription() const{ //Returns the description.
+std::string Item::getDescription() const{ //Returns the description.
     return description;
 }
 
-Weapon::Weapon(string _name, bool pickup, string desc, int dur, bool ultimate){
+Weapon::Weapon(std::string _name, bool pickup, std::string desc, std::string itemType, int dur, bool ultimate):Item(_name, pickup, desc, itemType){
     durability = dur;
     ultimate = ultimate;
 }
@@ -42,7 +42,7 @@ void Weapon::changeDurability(int i){ //Changes durability to passed value.
     durability = i;
 }
 
-ActionObject::ActionObject(string _name, bool pickup, string desc, string _effect){
+ActionObject::ActionObject(std::string _name, bool pickup, std::string desc, std::string _itemType, std::string _effect):Item(_name, pickup, desc, _itemType){
     effect = _effect;
 }
 
@@ -50,7 +50,7 @@ ActionObject::~ActionObject(){
     
 }
 
-string ActionObject::getEffect(){
+std::string ActionObject::getEffect(){
     return effect;
 }
 
