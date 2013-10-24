@@ -101,7 +101,7 @@ public:
 	bool hasWeapon() const;//Checks for weapon
 private:
 	int numItems;//Number of items player has
-	Item **inventory;//List of items in inventory
+	List<Item*> inventory;//List of items in inventory
 };
 
 class NPC:public People{
