@@ -49,7 +49,7 @@ private:
 
 class Room:public Basic{
 public:
-	Room(std::string name, List<std::string> _commands, std::string desc, List<Weapon> _weapons, List<ActionObject> _actionObjects);//Initialize room with the name, a list of commands, the description of the room, and a list of items in the room
+	Room(std::string name, List<std::string> _commands, std::string desc, List<Weapon*> _weapons, List<ActionObject*> _actionObjects);//Initialize room with the name, a list of commands, the description of the room, and a list of items in the room
 	~Room();//Deallocates memory
 	//void addItem(Item *item);//Adds an item to items array
 	//void removeItem(Item *item);//Removes an item from items array
@@ -69,15 +69,15 @@ public:
 	Room northRoom() const;//Gets north room
 	Room eastRoom() const;//Gets east room
 	Room southRoom() const;//Gets south room
-	void westRoom(Room room);//Sets west room
-	void northRoom(Room room);//Sets north room
-	void southRoom(Room room);//Sets south room
-	void eastRoom(Room room);//Sets east room
+	void westRoom(Room* room);//Sets west room
+	void northRoom(Room* room);//Sets north room
+	void southRoom(Room* room);//Sets south room
+	void eastRoom(Room* room);//Sets east room
 private:
 	int numItems;
 	//List<Item*> items;//List of items in room
-    List<Weapon> weapons;
-    List<ActionObject> actionObjects;
+    List<Weapon*> weapons;
+    List<ActionObject*> actionObjects;
 	List<std::string> commands;//List of commands
 	std::string description;//Description of room
 	bool visited;//Variable to determine if room has been visited
@@ -91,38 +91,38 @@ private:
 
 class People:public Basic{
 public:
-	People(std::string _name, Room _room, std::string *_commands);//Initializes people with name, room it's in, and list of commands
+	People(std::string _name, Room* _room, std::string *_commands);//Initializes people with name, room it's in, and list of commands
 	virtual ~People();//Deconstructor
-	void setPosition(Room _room);//Set position
-	void getCommands() const;//Prints commands available
+	void setPosition(Room* _room);//Set position
+	std::string* getCommands() const;//Prints commands available
     Room* getRoom() const;//Gets room
 private:
-	Room *inRoom;//Pointer to what room the person is in
+	Room* inRoom;//Pointer to what room the person is in
 	std::string *commands;//List of commands available
 };
 
 class Player: public People{
 public:
-	Player(std::string _name, Room _room, std::string *_commands);//Initializes with name of player, room player is in, and list of commands available to player
+	Player(std::string _name, Room* _room, std::string *_commands);//Initializes with name of player, room player is in, and list of commands available to player
 	~Player();//Deconstructor
 	//void addItem(Item *newItem);//Adds item to inventory
 	//void removeItem(Item *toRemove);//Removes item from inventory
     void addWeapon(Weapon* _weapon);
-    void removeWeapon(Weapon* _weapon);
+    void removeWeapon(Weapon *_weapon);
     void addActionObject(ActionObject* _actionObject);
     void removeActionObject(ActionObject* _actionObject);
-	Item getItem(Item *_item) const;//Gets item from inventory
+	Weapon* getItem(Weapon *_item) const;//Gets item from inventory
 	bool hasWeapon() const;//Checks for weapon
 private:
 	int numItems;//Number of items player has
 	//List<Item*> inventory;//List of items in inventory
-    List<Weapon> weapons;
-    List<ActionObject> actionObjects;
+    List<Weapon*> weapons;
+    List<ActionObject*> actionObjects;
 };
 
 class NPC:public People{
 public:
-	NPC(std::string _name, Room _room, std::string *_commands, bool _kill, bool _mega);//Initializes with name of enemy, room enemy is in, list of commands available, if it kills when encountered, and if it is boss
+	NPC(std::string _name, Room* _room, std::string *_commands, bool _kill, bool _mega);//Initializes with name of enemy, room enemy is in, list of commands available, if it kills when encountered, and if it is boss
 	~NPC();//Deconstructor
 	bool ifKill() const;//Checks if the NPC kills
 	void changeKill(bool _kill);//Changes if NPC kills

@@ -17,10 +17,6 @@ Item::Item(std::string _name, bool pickup, std::string desc, std::string _itemTy
 Item::~Item(){ //Deconstructor
 }
 
-std::string Item::getName() const{ //Returns the name.
-    return name;
-}
-
 std::string Item::getDescription() const{ //Returns the description.
     return description;
 }
@@ -34,7 +30,7 @@ Weapon::~Weapon(){ //Deconstructor.
     
 }
 
-int Weapon::getDurability(){ //Returns the durability.
+int Weapon::getDurability() const{ //Returns the durability.
     return durability;
 }
 
@@ -50,7 +46,7 @@ ActionObject::~ActionObject(){
     
 }
 
-std::string ActionObject::getEffect(){
+std::string ActionObject::getEffect() const{
     return effect;
 }
 

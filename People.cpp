@@ -8,7 +8,7 @@
 
 #include "adventure.h"
 
-People::People(std::string _name, Room  _room, std::string * _commands):Basic(_name){ //Initializes people with name and x,y-coordinates, and list of commands
+People::People(std::string _name, Room* _room, std::string * _commands):Basic(_name){ //Initializes people with name and x,y-coordinates, and list of commands
     inRoom = _room;
     commands = _commands;
 }
@@ -16,7 +16,7 @@ People::People(std::string _name, Room  _room, std::string * _commands):Basic(_n
 People::~People(){
 }
 
-void People::setPosition(Room * roomToSet){
+void People::setPosition(Room* roomToSet){
     inRoom = roomToSet;
 }
 
@@ -28,7 +28,7 @@ Room* People::getRoom() const{
     return inRoom;
 }
 
-Player::Player(std::string _name, Room _room, std::string* _commands, bool _kill):People(_name, _room, _commands){
+Player::Player(std::string _name, Room* _room, std::string* _commands):People(_name, _room, _commands){
     numItems = 0;
     initialize(weapons);
     initialize(actionObjects);
@@ -63,22 +63,22 @@ void Player::removeActionObject(ActionObject *_actionObject){
 		}
 }
 
-Item Player::getItem(Item *_item) const{
+Weapon* Player::getItem(Weapon *_item) const{
     for(int i=0; i<numItems; i++)
-		if(getNth(inventory,i)==_item){
-			return getNth(inventory, i);
+		if(getNth(weapons,i)==_item){
+			return getNth(weapons, i);
 		}
 }
 
 bool Player::hasWeapon() const{
     for(int i=0; i<numItems; i++)
-		if(getNth(inventory,i).itemType=="Weapon"){
+		if(getNth(weapons,i)->getDescription()=="Weapon"){
 			return true;
 		}
     return false;
 }
 
-NPC::NPC(std::string _name, Room  _room, std::string * _commands, bool _kill, bool _mega):People(_name, _room, _commands){
+NPC::NPC(std::string _name, Room* _room, std::string * _commands, bool _kill, bool _mega):People(_name, _room, _commands){
     kill = _kill;
     mega = _mega;
 }

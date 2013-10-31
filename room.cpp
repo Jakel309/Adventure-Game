@@ -2,7 +2,7 @@
 #include <iostream>
 #include "adventure.h"
 
-Room::Room(std::string name, List<std::string> _commands, std::string desc, List<Weapon> _weapons, List<ActionObject> _actionObjects):Basic(name){
+Room::Room(std::string name, List<std::string> _commands, std::string desc, List<Weapon*> _weapons, List<ActionObject*> _actionObjects):Basic(name){
 	initialize(commands);
 	for(int i=0; i<getSize(_commands); i++)
 		append(commands,getNth(_commands,i));
@@ -19,11 +19,11 @@ Room::Room(std::string name, List<std::string> _commands, std::string desc, List
 
 Room::~Room(){
 	destroy(commands);
-	for(int i=0; i<getSize(weapons); i++)
-		~Weapon getNth(weapons,i);
+	//for(int i=0; i<getSize(weapons); i++)
+	//	~Weapon getNth(weapons,i);
 	destroy(weapons);
-    for(int i=0; i<getSize(actionObjects); i++)
-		~ActionObject getNth(actionObjects,i);
+    //for(int i=0; i<getSize(actionObjects); i++)
+	//	~ActionObject getNth(actionObjects,i);
 	destroy(actionObjects);
 }
 
@@ -84,8 +84,8 @@ void Room::visit(){
 }
 
 void Room::itemsInRoom() const{
-	for(int i=0; i<getSize(items); i++)
-		std::cout<<getNth(items,i)<<std::endl;
+	for(int i=0; i<getSize(weapons); i++)
+		std::cout<<getNth(weapons,i)<<std::endl;
 }
 
 void Room::commandsAvailable() const{
@@ -116,18 +116,18 @@ Room Room::southRoom() const{
 	return *pSouthRoom;
 }
 
-void Room::westRoom(Room room){
+void Room::westRoom(Room* room){
 	pWestRoom=room;
 }
 
-void Room::northRoom(Room room){
+void Room::northRoom(Room* room){
 	pNorthRoom=room;
 }
 
-void Room::southRoom(Room room){
+void Room::southRoom(Room* room){
 	pSouthRoom=room;
 }
 
-void Room::eastRoom(Room room){
+void Room::eastRoom(Room* room){
 	pEastRoom=room;
 }
