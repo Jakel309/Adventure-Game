@@ -1,96 +1,34 @@
 //Definitions for the functions in Room class
-#include <iostream>
 #include "adventure.h"
 
-Room::Room(std::string name, List<std::string> _commands, std::string desc, List<Weapon*> _weapons, List<ActionObject*> _actionObjects):Basic(name){
-	initialize(commands);
-	for(int i=0; i<getSize(_commands); i++)
-		append(commands,getNth(_commands,i));
+Room::Room(std::string name, std::string desc, std::list<Item*> _items):Basic(name){
 	description=desc;
-	initialize(weapons);
-    initialize(actionObjects);
-	for(int i=0; i<getSize(_weapons); i++)
-		append(weapons,getNth(_weapons,i));
-    for(int i=0; i<getSize(_actionObjects); i++)
-		append(actionObjects,getNth(_actionObjects,i));
-
+	items=_items;
 	visited=false;
 }
 
 Room::~Room(){
-	destroy(commands);
-	//for(int i=0; i<getSize(weapons); i++)
-	//	~Weapon getNth(weapons,i);
-	destroy(weapons);
-    //for(int i=0; i<getSize(actionObjects); i++)
-	//	~ActionObject getNth(actionObjects,i);
-	destroy(actionObjects);
 }
 
-//void Room::addItem(Item *item){
-//	append(items,item);
-//}
-//
-//void Room::removeItem(Item *item){
-//	for(int i=0; i<getSize(items); i++)
-//		if(getNth(items,i)==item){
-//			removeNth(items,i);
-//			break;
-//		}
-//}
-
-void Room::addWeapon(Weapon *_weapon){
-	append(weapons,_weapon);
+void Room::addItem(Item *item){
+	items.push_back(item);
 }
 
-void Room::removeWeapon(Weapon *_weapon){
-	for(int i=0; i<getSize(weapons); i++)
-		if(getNth(weapons,i)==_weapon){
-			removeNth(weapons,i);
-			break;
-		}
-}
-
-void Room::addActionObject(ActionObject *_actionObject){
-	append(actionObjects,_actionObject);
-}
-
-void Room::removeActionObject(ActionObject *_actionObject){
-	for(int i=0; i<getSize(actionObjects); i++)
-		if(getNth(actionObjects,i)==_actionObject){
-			removeNth(actionObjects,i);
-			break;
-		}
+void Room::removeItem(Item *item){
+	items.remove(item);
 }
 
 void Room::updateDesc(std::string desc){
 	description=desc;
 }
 
-void Room::addCommand(std::string com){
-	append(commands,com);
-}
-
-void Room::removeCommand(std::string com){
-	for(int i=0; i<getSize(commands); i++)
-		if(getNth(commands,i)==com){
-			removeNth(commands,i);
-			break;
-		}
-}
-
 void Room::visit(){
 	visited=true;
 }
 
-void Room::itemsInRoom() const{
-	for(int i=0; i<getSize(weapons); i++)
-		std::cout<<getNth(weapons,i)<<std::endl;
-}
-
-void Room::commandsAvailable() const{
-	for(int i=0; i<getSize(commands); i++)
-		std::cout<<getNth(commands,i)<<std::endl;
+void Room::itemsInRoom(){
+	for(std::list<Item*>::iterator it=items.begin(); it!=items.end(); ++it)
+		std::cout<<(*it)->getName()<<std::endl;
 }
 
 void Room::descriptionOfRoom() const{
