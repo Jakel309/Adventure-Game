@@ -1,0 +1,1 @@
+@g++ -Wall -Wextra -Werror -Wshadow -Wunreachable-code -pedantic-errors -Wno-unreachable-code "-I%~dp0." %* -lgdi32 -luuid -lole32 -lolepro32 -lmsimg32 -o %~n1.exe

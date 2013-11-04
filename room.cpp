@@ -1,10 +1,13 @@
 //Definitions for the functions in Room class
 #include "adventure.h"
 
-Room::Room(std::string name, std::string desc, std::list<Item*> _items):Basic(name){
+Room::Room(std::string _name, std::string desc):Basic(_name){
 	description=desc;
-	items=_items;
 	visited=false;
+	pWestRoom=NULL;
+	pNorthRoom=NULL;
+	pEastRoom=NULL;
+	pSouthRoom=NULL;
 }
 
 Room::~Room(){
@@ -27,8 +30,20 @@ void Room::visit(){
 }
 
 void Room::itemsInRoom(){
+	std::cout<<"This room contains:"<<std::endl;
 	for(std::list<Item*>::iterator it=items.begin(); it!=items.end(); ++it)
 		std::cout<<(*it)->getName()<<std::endl;
+}
+
+Item* Room::getItem(std::string _name){
+    for(std::list<Item*>::iterator it=items.begin(); it!=items.end(); ++it)
+		if((*it)->getName()==_name)
+			return *it;
+	return NULL;
+}
+
+std::list<Item*> Room::itemsList(){
+	return items;
 }
 
 void Room::descriptionOfRoom() const{
@@ -39,19 +54,19 @@ bool Room::ifVisited() const{
 	return visited;
 }
 
-Room Room::westRoom() const{
-	return *pWestRoom;
+Room* Room::westRoom() const{
+	return pWestRoom;
 }
 
-Room Room::northRoom() const{
-	return *pNorthRoom;
+Room* Room::northRoom() const{
+	return pNorthRoom;
 }
-Room Room::eastRoom() const{
-	return *pEastRoom;
+Room* Room::eastRoom() const{
+	return pEastRoom;
 }
 
-Room Room::southRoom() const{
-	return *pSouthRoom;
+Room* Room::southRoom() const{
+	return pSouthRoom;
 }
 
 void Room::westRoom(Room* room){

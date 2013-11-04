@@ -11,29 +11,42 @@ private:
 	std::string name;
 };
 
+class Room;
+
 class Item:public Basic{
 public:
 	Item(std::string _name, bool pickup, std::string desc);//Initializes item with the name, whether it can be picked up, and it's description
 	virtual ~Item();//Deconstructor
 	std::string getDescription() const;//Gets description
 	std::string getItemType() const;
+	int getDurability() const;//Gets durability
+	void changeDurability(int i);//Changes durability
+	std::string getEffect() const;//Gets effect
+	void addInteractWith(Item *item);//Adds an object it can interact with
+	bool doesInteract(Item *item);//Checks if object can interact with another
+	void removeInteractWith(Item *item);//Removes one of the objects this object can interact with
+	Room* openRoom() const;
+	void setOpenRoom(Room* room);
+	bool pickUp() const;
 protected:
 	void setItemType(std::string type);
+	void setDur(int i);
+	std::string effect;//The effect of object
+	std::list<Item*> canInteractWith;//List of items this item can interact with
+	Room* opensRoom;
 private:
 	std::string description;//Description of item
 	bool canPickUp;//Variable to determine if item can be picked up
 	std::string itemType;
+	int durability;
 };
 
 class Weapon:public Item{
 public:
-	Weapon(std::string _name, bool pickup, std::string desc, int dur, bool ultimate);//Initializes weapon with name, whether it can be picked up, its description, its durability, and if it is the ultimate weapon
+	Weapon(std::string _name, bool pickup, std::string desc, int dur, bool _ultimate);//Initializes weapon with name, whether it can be picked up, its description, its durability, and if it is the ultimate weapon
 	~Weapon();//Destructor
-	int getDurability() const;//Gets durability
-	void changeDurability(int i);//Changes durability
 	bool isUltimate() const;//Checks if weapon is ultimate
 private:
-	int durability;//Durability of weapon
 	bool ultimate;//Value for if weapon is ultimate weapon
 };
 
@@ -41,30 +54,25 @@ class ActionObject:public Item{
 public:
 	ActionObject(std::string _name, bool pickup, std::string desc, std::string _effect);//Initializes an action object with name, whether it can be picked up, its description, and its effect
 	~ActionObject();//Destructor
-	std::string getEffect() const;//Gets effect
-	void addInteractWith(Item &item);//Adds an object it can interact with
-	bool doesInteract(Item &item) const;//Checks if object can interact with another
-	void removeInteractWith(Item &item);//Removes one of the objects this object can interact with
-private:
-	std::string effect;//The effect of object
-	std::list<Item*> canInteractWith;//List of items this item can interact with
 };
 
 class Room:public Basic{
 public:
-	Room(std::string name, std::string desc, std::list<Item*> _items);//Initialize room with the name, a list of commands, the description of the room, and a list of items in the room
+	Room(std::string _name, std::string desc);//Initialize room with the name, a list of commands, the description of the room, and a list of items in the room
 	~Room();//Deallocates memory
 	void addItem(Item *item);//Adds an item to items array
 	void removeItem(Item *item);//Removes an item from items array
 	void updateDesc(std::string desc);//Changes description of room
 	void visit();//Changes the visited variable to true
 	void itemsInRoom();//Prints items in room
+	Item* getItem(std::string _item);
+	std::list<Item*> itemsList();
 	void descriptionOfRoom() const;//Prints description of the room
 	bool ifVisited() const;//Checks to see if room is visited
-	Room westRoom() const;//Gets west room
-	Room northRoom() const;//Gets north room
-	Room eastRoom() const;//Gets east room
-	Room southRoom() const;//Gets south room
+	Room* westRoom() const;//Gets west room
+	Room* northRoom() const;//Gets north room
+	Room* eastRoom() const;//Gets east room
+	Room* southRoom() const;//Gets south room
 	void westRoom(Room* room);//Sets west room
 	void northRoom(Room* room);//Sets north room
 	void southRoom(Room* room);//Sets south room
@@ -98,7 +106,8 @@ public:
 	~Player();//Deconstructor
 	void addItem(Item *item);//Adds item to inventory
 	void removeItem(Item *item);//Removes item from inventory
-	Item* getItem(std::string name);
+	Item* getItem(std::string _name);
+	Item* getWeapon();
 	bool hasWeapon();//Checks for weapon
 private:
 	int numItems;//Number of items player has
@@ -116,3 +125,13 @@ private:
 	bool kill;//Variable to see if enemy kills
 	bool mega;//Boss checker variable
 };
+
+//Commands in game
+void moveNorth(Player* player);
+void moveSouth(Player* player);
+void moveEast(Player* player);
+void moveWest(Player* player);
+void use(std::string _input, Player* player);
+void pickUp(std::string _input, Player* player);
+void eat(std::string _input, Player* player);
+void help();

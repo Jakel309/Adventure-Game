@@ -38,15 +38,25 @@ void Player::removeItem(Item *item){
 	inventory.remove(item);
 }
 
-Item* Player::getItem(std::string name){
+Item* Player::getItem(std::string _name){
     for(std::list<Item*>::iterator it=inventory.begin(); it!=inventory.end(); ++it)
-		if((*it)->getName()==name)
+		if((*it)->getName()==_name)
 			return *it;
+	return NULL;
+}
+
+Item* Player::getWeapon(){
+	for(std::list<Item*>::iterator it=inventory.begin(); it!=inventory.end(); ++it){
+		if((*it)->getItemType()=="Weapon"&&(*it)->getDurability()>0){
+			return *it;
+		}
+	}
+	return NULL;
 }
 
 bool Player::hasWeapon(){
     for(std::list<Item*>::iterator it=inventory.begin(); it!=inventory.end(); ++it){
-		if(((it*)->getItemType())=="Weapon"){
+		if((*it)->getItemType()=="Weapon"&&(*it)->getDurability()>0){
 			return true;
 		}
 	}
