@@ -139,7 +139,7 @@ int main(){
 	dragRoom.northRoom(&ranRoom10);
 	bool win=false;
 	bool defeated=false;
-	cout<<"Welcome to the cave of death.";
+	cout<<"Welcome to the cave of death. ";
 	cout<<"Within, you will most likely die, unless you are really lucky and the cave decides you can win the treasure, but that is quite unlikely."<<endl<<endl;
 	cout<<"What is your name, ye who is about to die?"<<endl;
 	for(int i=0; i<19; i++)
