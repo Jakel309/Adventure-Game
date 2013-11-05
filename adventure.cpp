@@ -145,9 +145,8 @@ int main(){
 	for(int i=0; i<19; i++)
 		cout<<endl;
 	string name="Black";
-	cin>>name;
+	getline(cin,name);
 	Player player(name, &startRoom);
-	string input;
 	for(int i=0; i<50; i++)
 		cout<<endl;
 	player.getRoom()->descriptionOfRoom();
@@ -157,8 +156,6 @@ int main(){
 			win=true;
 			break;
 		}
-		for(int i=0; i<18; i++)
-			cout<<endl;
 		for(std::list<NPC*>::iterator it=monsters.begin(); it!=monsters.end(); ++it){
 			if((*it)->getRoom()==player.getRoom()){
 				cout<<"You are attacked by a "<<(*it)->getName()<<"!"<<endl;
@@ -174,7 +171,8 @@ int main(){
 			}
 		}
 		cout<<"What will you do?"<<endl;
-		cin>>input;
+		string input;
+		getline(cin, input);
 		if(input.find("North")!=string::npos){
 			moveNorth(&player);
 		}else if(input.find("East")!=string::npos){
@@ -191,13 +189,13 @@ int main(){
 			help();
 		}else if(input.find("Eat")!=string::npos){
 			eat(input,&player);
+		}else if(input.find("Look")!=string::npos){
+			look(&player);
 		}else{
 			cout<<"I don't recognize that command"<<endl;
 		}
 		if(defeated)
 			break;
-		for(int i=0; i<50; i++)
-			cout<<endl;
 	}
 	if(win)
 		cout<<"Congratulations! The cave granted you the treasures within and you have survived!"<<endl;

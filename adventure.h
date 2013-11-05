@@ -135,3 +135,4 @@ void use(std::string _input, Player* player);
 void pickUp(std::string _input, Player* player);
 void eat(std::string _input, Player* player);
 void help();
+void look(Player* player);

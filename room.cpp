@@ -30,6 +30,10 @@ void Room::visit(){
 }
 
 void Room::itemsInRoom(){
+	if(items.empty()){
+		std::cout<<"This room contains nothing"<<std::endl;
+		return;
+	}
 	std::cout<<"This room contains:"<<std::endl;
 	for(std::list<Item*>::iterator it=items.begin(); it!=items.end(); ++it)
 		std::cout<<(*it)->getName()<<std::endl;

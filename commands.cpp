@@ -1,8 +1,10 @@
 #include "adventure.h"
 
 void moveNorth(Player* player){
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
 	if(player->getRoom()->northRoom()==NULL)
-		std::cout<<"You can't go north";
+		std::cout<<"You can't go north"<<std::endl;
 	else{
 		player->setPosition((player->getRoom()->northRoom()));
 		for(int i=0; i<50; i++)
@@ -13,8 +15,10 @@ void moveNorth(Player* player){
 	}
 }
 void moveSouth(Player* player){
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
 	if(player->getRoom()->southRoom()==NULL)
-		std::cout<<"You can't go south";
+		std::cout<<"You can't go south"<<std::endl;
 	else{
 		player->setPosition((player->getRoom()->southRoom()));
 		for(int i=0; i<50; i++)
@@ -25,8 +29,10 @@ void moveSouth(Player* player){
 	}
 }
 void moveEast(Player* player){
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
 	if(player->getRoom()->eastRoom()==NULL)
-		std::cout<<"You can't go east";
+		std::cout<<"You can't go east"<<std::endl;
 	else{
 		player->setPosition((player->getRoom()->eastRoom()));
 		for(int i=0; i<50; i++)
@@ -37,8 +43,10 @@ void moveEast(Player* player){
 	}
 }
 void moveWest(Player* player){
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
 	if(player->getRoom()->westRoom()==NULL)
-		std::cout<<"You can't go west";
+		std::cout<<"You can't go west"<<std::endl;
 	else{
 		player->setPosition((player->getRoom()->westRoom()));
 		for(int i=0; i<50; i++)
@@ -49,6 +57,8 @@ void moveWest(Player* player){
 	}
 }
 void use(std::string _input, Player* player){
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
 	std::string input=_input.erase(0,4);
 	std::string iItem=input.substr(0,input.find("with")-1);
 	std::string oItem=input.substr(6,input.size()-1);
@@ -87,6 +97,8 @@ void use(std::string _input, Player* player){
 }
 
 void eat(std::string _input, Player* player){
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
 	std::string input=_input.erase(0,4);
 	if(player->getItem(input)==NULL){
 		std::cout<<"You do not have that item."<<std::endl;
@@ -99,6 +111,8 @@ void eat(std::string _input, Player* player){
 }
 
 void pickUp(std::string _input, Player* player){
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
 	std::string input=_input.erase(0,8);
 	if(player->getRoom()->getItem(input)==NULL){
 		std::cout<<"That item is not in the room."<<std::endl;
@@ -110,5 +124,13 @@ void pickUp(std::string _input, Player* player){
 	}
 }
 void help(){
-	std::cout<<"The commands available to you are: North, South, East, West, Use (Item Name) with (Item Name), Pick up (Item Name), Eat (Item Name). Everything is case sensitive as do spaces."<<std::endl;
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
+	std::cout<<"The commands available to you are: North, South, East, West, Use (Item Name) with (Item Name), Pick up (Item Name), Eat (Item Name), Look. Everything is case sensitive as do spaces."<<std::endl;
+}
+
+void look(Player* player){
+	for(int i=0; i<50; i++)
+		std::cout<<std::endl;
+	player->getRoom()->itemsInRoom();
 }
